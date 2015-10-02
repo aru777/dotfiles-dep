@@ -24,3 +24,5 @@ imap <c-w>k <c-o><c-w>k
 imap <c-w>j <c-o><c-w>j
 imap <c-w>l <c-o><c-w>l
 imap <c-w>h <c-o><c-w>h
+
+imap <C-K> <ESC>:pyf /mnt/vol/engshare/admin/scripts/vim/clang-format.py<CR>i

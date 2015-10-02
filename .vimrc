@@ -3,6 +3,7 @@
 " ========== First Settings ==========
 " These are settings that should be first, so that when pathogen loads plugins they are respected
 set nocompatible
+set t_Co=256
 let mapleader="," " , is just easier to type than \
 
 " This must be set before nerdtree is loaded. Allows you to specify per directory bookmarks
@@ -16,6 +17,7 @@ filetype indent on
 
 " ========== Pathogen Initialization ==========
 " https://github.com/tpope/vim-pathogen/
+let g:pathogen_disabled = [ 'tagbar' ]
 call pathogen#infect()   " Load all plugins in ~/.vim/bundle
 call pathogen#helptags() " Invoke :helptags on all non-$VIM doc directories in runtime path
 
@@ -30,8 +32,14 @@ set visualbell                 " Tell me when I mess up
 syntax on                      " Turn on syntax highlighting
 set scrolloff=8                " Start scrolling when 8 lines away from margins
 set scrolljump=5               " Scroll 5 lines at a time
-syn sync fromstart             " Sync whole file
-
+" syn sync fromstart             " Sync whole file [makes it slow]
+syntax sync minlines=200
+set completeopt-=preview
+set lazyredraw
+set ttyfast
+set nofsync
+set timeoutlen=1000
+set ttimeoutlen=10
 
 " ========== Search Settings ==========
 
@@ -80,11 +88,18 @@ set updatetime=60000                                 " Write to swap every 60s
 " ========== Visuals ==========
 
 set showmatch                        " Show matching brace
-set showmode                         " Good if vim-powerline not installed
-set ruler                            " Good if vim-powerline not installed
-set rulerformat=%17(%l/%L,%c\ %p%%%) " Good if vim-powerline not installed
-set cursorline                       " Current line is highlighted
+set noshowmode                         " Good if vim-powerline not installed
+" set ruler                            " Good if vim-powerline not installed
+" set rulerformat=%17(%l/%L,%c\ %p%%%) " Good if vim-powerline not installed
 
 for f in split(glob('~/.vim/plugin/settings/*.vim'), '\n')
   exe 'source' f
 endfor
+
+set tags=tags;/
+set relativenumber
+set numberwidth=1
+
+" let g:powerline_loaded = 1
+let g:airline_theme='simple'
+let g:airline_powerline_fonts = 1

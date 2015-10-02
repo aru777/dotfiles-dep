@@ -19,3 +19,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 for config_file ($HOME/.zshplugins/*.zsh) source $config_file
+
+bindkey '^R' history-incremental-pattern-search-backward
+

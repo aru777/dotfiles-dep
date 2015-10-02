@@ -1,0 +1,70 @@
+priority -48
+
+snippet cr "Facebook copyright" b
+// Copyright 2004-present Facebook. All Rights Reserved.
+
+endsnippet
+
+snippet 'ns (.+)' "C++ namespaces" r
+`!p 
+nss = match.group(1).split()
+snip.rv += "namespace %s {" % nss[0]
+for w in nss[1:]:
+	snip.rv += "\nnamespace %s {" % w
+`
+${0}
+`!p
+for w in nss:
+	snip.rv += "}\n"
+`
+endsnippet
+
+snippet cl "C++ class definition" b
+class ${1:`!p snip.rv = snip.basename`} {
+ public:
+  ${1:`!p snip.rv = snip.basename`}(${2});
+
+	${0}
+ private:
+`!p 
+import re
+if t[2]:
+  args = t[2].split(',')
+  for a in args:
+  	s = re.sub("\s+", ' ', a).strip().rstrip().replace("&", "")
+  	snip.rv += "  " + s + "_;\n"
+`
+};
+endsnippet
+
+snippet css "const std::string" i
+const std::string${0}
+endsnippet
+
+snippet hashdef "Hash defintion" b
+template <>
+class hash<${1}> {
+ public:
+  size_t operator()(const $1& key) const;
+};${0}
+endsnippet
+
+snippet hashdec "Hash Declaration" b
+size_t hash<${1}>::operator()(const $1& key) const {
+  return folly::hash::hash_combine(${2});
+}${0}
+endsnippet
+
+snippet sptr "Shared Pointer" i
+std::shared_ptr<${VISUAL}> ${0}
+endsnippet
+
+snippet unmap "Unordered map" i
+std::unordered_map<${1}, ${2}> ${0}
+endsnippet
+
+snippet tf "Description" b
+TEST_F(${1:`!p snip.rv = snip.basename`}, ${2}) {
+	${0}
+}
+endsnippet
