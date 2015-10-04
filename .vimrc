@@ -17,7 +17,7 @@ filetype indent on
 
 " ========== Pathogen Initialization ==========
 " https://github.com/tpope/vim-pathogen/
-let g:pathogen_disabled = [ 'tagbar' ]
+let g:pathogen_disabled = [ 'tmuxline.vim', 'tagbar' ]
 call pathogen#infect()   " Load all plugins in ~/.vim/bundle
 call pathogen#helptags() " Invoke :helptags on all non-$VIM doc directories in runtime path
 
@@ -29,7 +29,6 @@ set hidden                     " Allow buffers to exist in the background
 set history=1000               " More history for :cmdline
 set showcmd                    " Show incomplete commands at the bottom
 set visualbell                 " Tell me when I mess up
-syntax on                      " Turn on syntax highlighting
 set scrolloff=8                " Start scrolling when 8 lines away from margins
 set scrolljump=5               " Scroll 5 lines at a time
 " syn sync fromstart             " Sync whole file [makes it slow]
@@ -40,6 +39,7 @@ set ttyfast
 set nofsync
 set timeoutlen=1000
 set ttimeoutlen=10
+set laststatus=2 " show status line on every window
 
 " ========== Search Settings ==========
 
@@ -92,14 +92,29 @@ set noshowmode                         " Good if vim-powerline not installed
 " set ruler                            " Good if vim-powerline not installed
 " set rulerformat=%17(%l/%L,%c\ %p%%%) " Good if vim-powerline not installed
 
+" aru7 misc
+
+set tags+=tags;/
+set relativenumber
+" set number
+set numberwidth=1
+set cursorline
+
+nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <leader>u :GundoToggle<CR>
+
+" Load plugins
 for f in split(glob('~/.vim/plugin/settings/*.vim'), '\n')
   exe 'source' f
 endfor
 
-set tags=tags;/
-set relativenumber
-set numberwidth=1
+" Doesn't work, yet to debug
+if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
 
-" let g:powerline_loaded = 1
-let g:airline_theme='simple'
-let g:airline_powerline_fonts = 1
+source ~/.vimrc.after " fb specifc items on home folder
