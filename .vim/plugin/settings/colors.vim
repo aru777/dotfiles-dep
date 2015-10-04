@@ -1,5 +1,7 @@
-let g:solarized_termcolors=16
+" let g:solarized_termcolors=16
+syntax enable
+let g:solarized_visibility='high'
+" let g:solarized_contrast='high'
 set background=dark
-"set background=light
 colorscheme solarized
-hi comment ctermfg=11
+" highlight Comment ctermbg=None ctermfg=Magenta
